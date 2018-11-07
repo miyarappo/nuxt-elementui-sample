@@ -14,40 +14,56 @@
             :value="item.value" />
         </el-select>
       </el-aside>
-      <el-main>フローに追加する行動を選択してください</el-main>
+      <el-main>
+        <h2 class="flow-title">フローに追加する行動を選択してください</h2>
+        <el-card
+          v-for="(action, key) in actions"
+          :key="key"
+          class="box-card">
+          <h3>{{ action.title }}</h3>
+          <p>{{ action.description }}</p>
+        </el-card>
+      </el-main>
     </el-container>
   </el-container> 
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
-      serviceOptions: [{
-          value: 'b_value',
+      serviceOptions: [
+        {
+          value: 'browser',
           label: 'ブラウザ'
-        }, {
-          value: 'g_value',
+        }, 
+        {
+          value: 'gmail',
           label: 'Gmail'
-        }, {
-          value: 's_value',
+        }, 
+        {
+          value: 'spreadsheet',
           label: 'スプレッドシート'
-        }],
+        }
+      ],
       value: ''
     }
   },
-  created() {
-    console.log(this)
+  computed: {
+    ...mapGetters({actions: 'flowAction/getShowingList'})
   },
   methods: {
     changeValue(value) {
       console.log(value)
+      this.$store.commit('flowAction/selectApplication', value)
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
   .el-container {
     color: #333;
   }
@@ -62,8 +78,19 @@ export default {
     height: calc(100vh - 60px);
   }
   .box-card {
-    width: 228px;
-    display: inline-block;
-    margin: 10px 20px 10px 0;
+    width: 100%;
+    margin-bottom: 10px;
+    cursor: pointer;
+    h3 {
+      font-size: 16px;
+    }
+    p {
+      font-size: 12px;
+    }
   }
+  .flow-title {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
 </style>
