@@ -4,6 +4,20 @@ export const state = () => ({
     title: '',
     task: '',
     action: '',
-    url: ''
+    url: '',
+    text: ''
   }
 })
+
+export const getters = {
+  getCreatingTask: state => state.creatingOne.task
+}
+
+export const mutations = {
+  setCreatingTask(state, task) {
+    state.creatingOne.task = task
+  },
+  setCreatingText(state, text) {
+    state.creatingOne.text = text
+  }
+}

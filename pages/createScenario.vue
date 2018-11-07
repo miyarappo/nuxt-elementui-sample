@@ -3,26 +3,52 @@
     <el-header>新規のシナリオ</el-header>
     <el-container>
       <el-aside width="400px">
-        <el-select
-          v-model="value"
-          placeholder="サービスを選択"
-          @change="changeValue(value)">
-          <el-option
-            v-for="(item, index) in serviceOptions"
-            :key="index"
-            :label="item.label"
-            :value="item.value" />
-        </el-select>
+        <el-container class="aside">
+          <el-select
+            v-model="value"
+            placeholder="サービスを選択"
+            @change="changeValue(value)">
+            <el-option
+              v-for="(item, index) in serviceOptions"
+              :key="index"
+              :label="item.label"
+              :value="item.value" />
+          </el-select>
+        </el-container>
       </el-aside>
       <el-main>
-        <h2 class="flow-title">フローに追加する行動を選択してください</h2>
-        <el-card
-          v-for="(action, key) in actions"
-          :key="key"
-          class="box-card">
-          <h3>{{ action.title }}</h3>
-          <p>{{ action.description }}</p>
-        </el-card>
+        <div v-if="creatingTask === ''">
+          <h2 class="flow-title">フローに追加する行動を選択してください</h2>
+          <div
+            v-for="action in actions"
+            :key="action.task"
+            class="box-card"
+            @click.prevent="selectAction(action.task)">
+            <el-card>
+              <h3>{{ action.title }}</h3>
+              <p>{{ action.description }}</p>
+            </el-card>
+          </div>
+        </div>
+        <div v-if="creatingTask === '+gamil_get_1'">
+          <h2 class="flow-title">メールを取得する</h2>
+          <div>
+            <span class="input-label">受信トレイ</span>
+            <el-input
+              v-model="input"
+              placeholder="入力してください"
+              class="input-size" />
+            <el-button
+              type="primary"
+              plain
+              class="button"
+              @click="submitEmail">保存する</el-button>
+            <el-button
+              type="info"
+              plain
+              class="button">キャンセル</el-button>
+          </div>
+        </div>
       </el-main>
     </el-container>
   </el-container> 
@@ -48,16 +74,23 @@ export default {
           label: 'スプレッドシート'
         }
       ],
-      value: ''
+      value: '',
+      input: ''
     }
   },
   computed: {
-    ...mapGetters({actions: 'flowAction/getShowingList'})
+    ...mapGetters({ creatingTask: 'scenario/getCreatingTask' }),
+    ...mapGetters({ actions: 'flowAction/getShowingList' },)
   },
   methods: {
     changeValue(value) {
-      console.log(value)
       this.$store.commit('flowAction/selectApplication', value)
+    },
+    selectAction(task) {
+      this.$store.commit('scenario/setCreatingTask', task)
+    },
+    submitEmail() {
+      this.$store.commit('scenario/setCreatingText', this.input)
     }
   }
 }
@@ -72,7 +105,6 @@ export default {
     height: 60px;
     line-height: 60px;
   }
-  
   .el-main {
     background-color: #F2F2F2;
     height: calc(100vh - 60px);
@@ -92,5 +124,19 @@ export default {
     font-size: 18px;
     margin-bottom: 20px;
   }
-
+  .aside {
+    margin-top: 50px;
+    justify-content: center;
+  }
+  .input-label {
+    display: inline-block;
+    margin-right: 30px;
+  }
+  .input-size {
+    width: 400px;
+  }
+  .button {
+    display: block;
+    margin: 40px 20px 0px 300px;
+  }
 </style>

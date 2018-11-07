@@ -4,67 +4,72 @@ export const state = () => ({
     browser: [
       {
         title: 'ブラウザを開く',
-        description: 'URLを入力してブラウザを開きます'
+        description: 'URLを入力してブラウザを開きます',
+        task: '+open_browzer_1'
       },
       {
         title: 'URLへ遷移',
-        description: 'ページを移動します'
+        description: 'ページを移動します',
+        task: '+go_to_1'
       },
       {
         title: 'クリック',
-        description: '対象の要素を選択してクリックします'
+        description: '対象の要素を選択してクリックします',
+        task: '+click_1'
       },
       {
         title: 'マウスオーバー',
-        description: 'マウスオーバーします'
+        description: 'マウスオーバーします',
+        task: '+hover_1'
       },
       {
         title: '文字入力',
-        description: '文字を入力します'
+        description: '文字を入力します',
+        task: '+type_text_1'
       },
       {
         title: 'テキストを取得',
-        description: '対象の要素を選択して取得します'
+        description: '対象の要素を選択して取得します',
+        task: '+get_text_1'
       },
       {
         title: 'パスワードを入力',
-        description: 'パスワードを入力します'
+        description: 'パスワードを入力します',
+        task: '+type_password_1'
       },
       {
-        title: 'キーを選択',
-        description: 'キーを選択します'
-      },
-      {
-        title: 'ダウンロードファイル一覧',
-        description: 'ダウンロードファイル一覧を表示します'
+        title: 'キーを送信',
+        description: 'キーを送信します',
+        task: '+send_keys_1'
       }
     ],
     gmail: [
       {
         title: 'Gmailを取得する',
-        description: 'Gmail受信データを取得しメール内容を確認できます'
+        description: 'Gmail受信データを取得しメール内容を確認できます',
+        task: '+gamil_get_1'
       },
       {
         title: 'Gmailを送信する',
-        description: 'Gmail受信データを取得しメール内容を確認できます'
-      },
-      {
-        title: 'Gmailのラベルを検索する',
-        description: 'Gmail受信データを取得しメール内容を確認できます'
+        description: 'Gmail受信データを取得しメール内容を確認できます',
+        task: '+gmail_send_1'
       }
     ],
     spreadsheet: [
       {
         title: 'ワークシートを選択',
-        description: 'ワークシートを選択します'
+        description: 'ワークシートを選択します',
+        task: '+select_sheet_1'
       },
       {
-        title: 'セルを保存',
-        description: 'セルを保存します'
+        title: 'セルに書き込む',
+        description: 'セルに書き込みます',
+        task: '+write_cell_1'
       },
       {
         title: '範囲を読み込む',
-        description: '範囲を読み込みます'
+        description: '範囲を読み込みます',
+        task: '+read_range_1'
       }
     ]
   }
