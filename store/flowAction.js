@@ -82,5 +82,8 @@ export const getters = {
 export const mutations = {
   selectApplication(state, application) {
     state.showingList = state.list[application]
+  },
+  resetShowingList(state) {
+    state.showingList = []
   }
 }

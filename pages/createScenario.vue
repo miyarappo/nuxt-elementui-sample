@@ -3,10 +3,16 @@
     <el-header>新規のシナリオ</el-header>
     <el-container>
       <el-aside width="400px">
-        <el-container class="aside">
+        <div class="aside">
+          <el-card
+            v-for="(item, index) in list"
+            :key="index"
+            class="flow-item">{{ item.title }}
+          </el-card>
           <el-select
             v-model="value"
             placeholder="サービスを選択"
+            class="application-select"
             @change="changeValue(value)">
             <el-option
               v-for="(item, index) in serviceOptions"
@@ -14,7 +20,7 @@
               :label="item.label"
               :value="item.value" />
           </el-select>
-        </el-container>
+        </div>
       </el-aside>
       <el-main>
         <div v-if="creatingTask === ''">
@@ -30,25 +36,9 @@
             </el-card>
           </div>
         </div>
-        <div v-if="creatingTask === '+gamil_get_1'">
-          <h2 class="flow-title">メールを取得する</h2>
-          <div>
-            <span class="input-label">受信トレイ</span>
-            <el-input
-              v-model="input"
-              placeholder="入力してください"
-              class="input-size" />
-            <el-button
-              type="primary"
-              plain
-              class="button"
-              @click="submitEmail">保存する</el-button>
-            <el-button
-              type="info"
-              plain
-              class="button">キャンセル</el-button>
-          </div>
-        </div>
+        <GetGmail
+          v-if="creatingTask === '+gamil_get_1'"
+          :reset-select="resetSelect()" />
       </el-main>
     </el-container>
   </el-container> 
@@ -56,8 +46,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import GetGmail from '~/components/GetGmail.vue'
 
 export default {
+  components: {
+    GetGmail
+  },
   data() {
     return {
       serviceOptions: [
@@ -74,13 +68,13 @@ export default {
           label: 'スプレッドシート'
         }
       ],
-      value: '',
-      input: ''
+      value: ''
     }
   },
   computed: {
     ...mapGetters({ creatingTask: 'scenario/getCreatingTask' }),
-    ...mapGetters({ actions: 'flowAction/getShowingList' },)
+    ...mapGetters({ actions: 'flowAction/getShowingList' }),
+    ...mapGetters({ list: 'scenario/getList' })
   },
   methods: {
     changeValue(value) {
@@ -88,9 +82,11 @@ export default {
     },
     selectAction(task) {
       this.$store.commit('scenario/setCreatingTask', task)
+      this.$store.commit('scenario/setCreatingTitle', 'メールを取得する')
     },
-    submitEmail() {
-      this.$store.commit('scenario/setCreatingText', this.input)
+    resetSelect() {
+      console.log('reset')
+      this.value = ''
     }
   }
 }
@@ -132,11 +128,11 @@ export default {
     display: inline-block;
     margin-right: 30px;
   }
-  .input-size {
-    width: 400px;
+  .flow-item {
+    width: 80%;
+    margin: 0 auto 20px;
   }
-  .button {
-    display: block;
-    margin: 40px 20px 0px 300px;
+  .application-select {
+    margin: 30px 0 0 100px;
   }
 </style>
