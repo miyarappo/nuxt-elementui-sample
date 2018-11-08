@@ -85,7 +85,6 @@ export default {
       this.$store.commit('scenario/setCreatingTitle', 'メールを取得する')
     },
     resetSelect() {
-      console.log('reset')
       this.value = ''
     }
   }
